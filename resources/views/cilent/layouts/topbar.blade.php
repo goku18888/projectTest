@@ -6,12 +6,12 @@
             </div>
             <div class="col-md-6 col-xs-6 text-center menu-1">
                 <ul>
-                    <li class="has-dropdown">
+                    {{-- <li class="has-dropdown">
                         <a href="product.html">Shop</a>
                         <ul class="dropdown">
                             <li><a href="single.html">Single Shop</a></li>
                         </ul>
-                    </li>
+                    </li> --}}
                     <li><a href="{{ route('us.about') }}">About</a></li>
                     {{-- <li class="has-dropdown">
                         <a href="services.html">Services</a>

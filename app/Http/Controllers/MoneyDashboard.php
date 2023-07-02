@@ -55,7 +55,7 @@ class MoneyDashboard extends Controller
         //total
         $product=products::all()->count();
         $customer=customers::all()->count();
-        $bill=bills::all()->count();
+        $bill=order::all()->count();
         $product_views=products::orderBy('product_views','DESC')->take(6)->get();
         
         //money 7 ngay

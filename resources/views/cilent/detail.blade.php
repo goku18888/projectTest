@@ -98,7 +98,7 @@
                                             @endfor
                                         </ul>
                                     <br>@forelse ($pro as $item)
-                                        <span class="price">${{ $item->price_product }}</span>
+                                        <span class="price">{{ number_format($item->price_product, 0, ',', '.') }} VND</span>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <h2 class="uppercase">Name Product</h2>

@@ -58,10 +58,10 @@
                             </thead>
                             <tbody>
                               <tr>
-                                <td>{{ $money }}$</td>
-                                <td>{{ $moneythgtrc }}$</td>
-                                <td>{{ $moneythangnay }}$</td>
-                                <td>{{ $moneymotnam }}$</td>
+                                <td>{{ number_format($money, 0, ',', '.') }} VND</td>
+                                <td>{{ number_format($moneythgtrc, 0, ',', '.') }} VND</td>
+                                <td>{{ number_format($moneythangnay, 0, ',', '.') }} VND</td>
+                                <td>{{ number_format($moneymotnam, 0, ',', '.') }} VND</td>
                               </tr>
                             </tbody>
                           </table>
@@ -80,8 +80,8 @@
                                 @foreach ($tong_tien_mua as $year => $tong_tien)
                                 <tr>
                                     <td>{{ $year }}</td>
-                                    <td>{{ $tong_tien }}$</td>
-                                    <td>{{ $tong_tien_ban[$year] - $tong_tien }}$</td>
+                                    <td>{{ number_format($tong_tien , 0, ',', '.') }} VND</td>
+                                    <td>{{ number_format($tong_tien_ban[$year] - $tong_tien , 0, ',', '.') }} VND</td>
                                 </tr>
                                 @endforeach
                             </tbody>

@@ -257,22 +257,54 @@ class ProductController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
-        $img_product = Storage::disk('public')->put('img/products', $request->img_product);
-        products::where('id',$id)->update(array_merge($request->validated(),['img_product' => $img_product]));
-        $product = products::where('id',$id)->first();
-            if($request->has('imgs_product')){
-                foreach($request->file('imgs_product') as $image){
-                    $imageName='-image-'.time().rand(1,1000).'.'.$image->extension();
-                    $image->move(public_path('product_images'),$imageName);
-                    imgproducts::insert([
-                        'imgs_product'=>$imageName,
-                        'products_id'=>$product->id,
-                    ]);
-                }
+        if (!session()->has('name_admin')) {
+            // Người dùng chưa đăng nhập, bạn có thể xử lý theo ý muốn, ví dụ:
+            return redirect()->route('login');
+        }
+        // Lấy thông tin sản phẩm cần cập nhật
+        $product = products::findOrFail($id);
+    
+        // Xử lý ảnh sản phẩm chính
+        if ($request->hasFile('img_product')) {
+            // Xóa ảnh cũ
+            Storage::disk('public')->delete($product->img_product);
+    
+            // Lưu ảnh mới
+            $img_product = Storage::disk('public')->put('img/products', $request->img_product);
+    
+            // Cập nhật trường img_product
+            $product->img_product = $img_product;
+        }
+    
+        // Xử lý ảnh sản phẩm phụ
+        if ($request->hasFile('imgs_product')) {
+            // Xóa tất cả ảnh phụ cũ
+            imgproducts::where('products_id', $id)->delete();
+    
+            // Lưu ảnh phụ mới
+            foreach ($request->file('imgs_product') as $image) {
+                $imageName = '-image-' . time() . rand(1, 1000) . '.' . $image->extension();
+                $image->move(public_path('product_images'), $imageName);
+    
+                $create = imgproducts::create([
+                    'imgs_product' => $imageName,
+                    'products_id' => $id,
+                ]);
             }
+        }
+    
+        // Cập nhật thông tin sản phẩm
+        $product->name_product = $request->name_product;
+        $product->old_price = $request->old_price;
+        $product->price_product = $request->price_product;
+        $product->amount = $request->amount;
+        $product->depscribe = $request->depscribe;
+        $product->supplier_id = $request->supplier_id;
+        $product->producttype_id = $request->producttype_id;
+        $product->save();
         return redirect('admin/products');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *

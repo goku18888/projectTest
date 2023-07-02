@@ -68,20 +68,48 @@
                     <label for="exampleInputPassword1">Main Picture Product</label>
                     <input type="file" class="form-control" id="exampleInputPassword1" placeholder="Picture..."
                       name="img_product" value="{{ $products->img_product }}">
+                    @if($products->img_product)
+                    <img src="{{ asset('storage/'.$products->img_product) }}" alt="Main Product Image" width="100">
+                    @else
+                    <p>Chưa có tệp nào được chọn</p>
+                    @endif
                     @error('img_product')
                     <span style="color:red;">{{$message}}</span>
                     @enderror
                   </div>
+                  @if ($errors->any())
+                      <div class="alert alert-danger">
+                          <ul>
+                              @foreach ($errors->all() as $error)
+                                  <li>{{ $error }}</li>
+                              @endforeach
+                          </ul>
+                      </div>
+                  @endif
                   <div class="form-group">
                     <label for="exampleInputPassword1">More Picture Product</label>
-                    <input type="file" class="form-control" id="exampleInputPassword1"
-                       placeholder="Pictures..." name="imgs_product[]" accept="image/*" multiple >
-                 </div>
+                    <input type="file" class="form-control" id="exampleInputPassword1" placeholder="Pictures..."
+                      name="imgs_product[]" accept="image/*" multiple>
+                    @if($products->imgs_product)
+                      @if(!$products->imgs_product->isEmpty())
+                        @foreach($products->imgs_product as $image)
+                          <img src="{{ asset('product_images/'.$image->imgs_product) }}" alt="More Product Image" width="100">
+                        @endforeach
+                      @else
+                        <p>Chưa có tệp nào được chọn</p>
+                      @endif
+                    @else
+                      <p>Chưa có tệp nào được chọn</p>
+                    @endif
+                    @error('imgs_product')
+                    <span style="color:red;">{{$message}}</span>
+                    @enderror
+                  </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Name Suppilier</label>
                     <select name="supplier_id" class="form-control">
                        @foreach ($suppliers as $supplier)
-                       <option value="{{ $supplier->id }}">
+                       <option value="{{ $supplier->id }}" @if($products->supplier_id == $supplier->id) selected @endif>
                           {{$supplier->name_supplier}}
                        </option>
                        @endforeach
@@ -91,17 +119,12 @@
                   <label for="exampleInputPassword1">Name Producttype</label>
                   <select name="producttype_id" class="form-control">
                      @foreach ($producttypes as $product)
-                     <option value="{{ $product->id }}">
+                     <option value="{{ $product->id }}" @if($products->producttype_id == $product->id) selected @endif>
                         {{$product->name_producttype}}
                      </option>
                      @endforeach
                   </select>
                </div>
-                  {{-- <div class="form-group">
-                    <label for="exampleInputPassword1">More Picture Product</label>
-                    <input type="file" class="form-control" id="exampleInputPassword1" placeholder="Pictures..."
-                      name="MorePictures">
-                  </div> --}}
                   <button type="submit" class="btn btn-primary">Update</button>
                   <a class="btn btn-primary" href="{{ route('ad.detail') }}" role="button"
                     aria-controls="offcanvasExample">Back To Product Details</a>

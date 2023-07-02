@@ -220,6 +220,7 @@ class IndexController extends Controller
             $cart[$id]['amount']=$cart[$id]['amount']+1;
         }else{
             $cart[$id]=[
+                'serie'=>$product->serie,
                 'name_product'=>$product->name_product,
                 'price_product'=>$product->price_product,
                 'product_type'=>$product->name_producttype,
@@ -239,7 +240,7 @@ class IndexController extends Controller
         $wards = Wards::orderBy('xaid', 'ASC')->get();
         $search=$request->get('ab');
         $carts=session()->get('cart');
-        if(isset($carts)){
+        if($carts){
             return view('cilent.cart',[
                 'carts'=>$carts,
                 'search'=>$search,
@@ -247,7 +248,6 @@ class IndexController extends Controller
                 'province'=>$province,
                 'wards'=>$wards,
             ]);
-        
         }else{
             return redirect()->route('us.index')->with('1','You didnt add any product in your Cart yet!!');
         }
@@ -271,10 +271,9 @@ class IndexController extends Controller
             unset($carts[$request->id]);
             session()->put('cart',$carts);
             $carts=session()->get('cart');
-
+            
             return response()->json(['cart'=>$carts,'code'=>200],200);
         }
-        return route('us.index');
      }
 
     public function addBill(Request $request)
@@ -347,7 +346,7 @@ class IndexController extends Controller
         //luu vao bang statictical
         $totalSales = 0;
         $totalQuantity = 0;
-        $totalOrder = bills::where('order_date', now()->format('Y-m-d'))->get()->count();
+        $totalOrder = order::where('created_at', now()->format('Y-m-d'))->get()->count();
         
         foreach ($dataStatistical as $value) {
             $totalSales += $value['total_money'];
@@ -418,7 +417,7 @@ class IndexController extends Controller
             'shipping_note'=>$request->shipping_note,
             'status'=>$ship->status,   
         );
-        Mail::send('admin.mail.mail_admin',['cart_array'=>$cart_array,'shipping_array'=>$shipping_array,'bill_fee'=>$bill_fee],
+        Mail::send('admin.mail.mail_admin',['cart_array'=>$cart_array,'shipping_array'=>$shipping_array,'bill_fee'=>$bill_fee,'order'=>$order],
         function($message)use($title_mail,$data){
             $message->to('hoctap438@gmail.com')->subject($title_mail);
             $message->from($data['email'],$title_mail);

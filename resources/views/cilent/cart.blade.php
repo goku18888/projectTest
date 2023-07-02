@@ -65,7 +65,8 @@
         <table class="table update_cart_url" data-url="{{ route('us.updateCart') }}">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">Mã Sản Phẩm</th>
+                    <th scope="col">Ảnh Sản Phẩm</th>
                     <th scope="col">Tên Sản Phẩm</th>
                     <th scope="col">Giá Sản Phẩm</th>
                     <th scope="col">Bao Nhiêu Sản Phẩm</th>
@@ -77,12 +78,14 @@
                 $total = 0;
             @endphp
             <tbody>
+                {{-- @dd($carts) --}}
                 @foreach ($carts as $id => $item)
                     @php
                         $total += $item['price_product'] * $item['amount'];
                     @endphp
                     <tr>
-                        <th scope="row">{{ $id }}</th>
+                        <th scope="row">{{ $item['serie'] }}</th>
+                        <th scope="row"><img src="{{ asset('/storage/'.$item['img_product']) }}" alt="" style="width: 70px;height: 70px;"></th>
                         <td>{{ $item['name_product'] }}</td>
                         <td>{{ number_format($item['price_product']) }}$</td>
                         <td>
@@ -204,7 +207,7 @@
                 location.reload();
                 if(data.code===200){
                     $('.update_cart_url').html(data.cart)
-                    alert('Update Complete');
+                    alert('Cập nhập thành công');
                 }
             },
             error:function(err){
@@ -229,7 +232,7 @@
                 location.reload();
                 if(data.code===200){
                     $('.delete_cart_url').html(data.cart);
-                    alert('Delete Complete');
+                    alert('Đã Xóa Sản Phẩm');
                 }
             },
             error:function(err){
@@ -275,7 +278,7 @@
         var xaid=$('.wards').val();
         var _token=$('input[name="_token"]').val();
         if (matp=='' && maqh=='' && xaid=='') {
-            alert('Lam on chon de tinh phi van chuyen');
+            alert('Làm ơn chọn để tính phí vận chuyển');
         } else {
             $.ajax({
             url:"{{url('/user/calculate-fee') }}",

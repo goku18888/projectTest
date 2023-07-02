@@ -23,8 +23,8 @@
                 <div class="col-md-12">
                     <p style="color: #fff;font-size: 17px;">Khách Hàng Đã Đặt Dịch Vụ Tại Shop Như Sau:</p>
                     <h4 style="color: #000;text-transform: uppercase;">Thông Tin Đơn Hàng:</h4>
-                    <p>Ma don hang: <strong style="text-transform: uppercase;color: #fff">{{ $order_id }}</strong></p>
-                    <p>Dich Vu: <strong style="text-transform: uppercase;color: #fff">Đặt Hàng Trực Tuyến</strong></p>
+                    <p>Mã đơn hàng: <strong style="text-transform: uppercase;color: #fff">{{ $order->id }}</strong></p>
+                    <p>Dịch vụ: <strong style="text-transform: uppercase;color: #fff">Đặt Hàng Trực Tuyến</strong></p>
                     <h4 style="color: #000;text-transform: uppercase;">Thông Tin Người Nhận</h4>
                     <p>Email:
                         @if ($shipping_array['shipping_email']=='')

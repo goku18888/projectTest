@@ -43,11 +43,8 @@ class UpdateRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'img_product' => [
-                'required',
-                'image',
-                'unique:App\Models\products,img_product',
-            ],
+            'img_product' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            'imgs_product.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'supplier_id' => [
                 'bail',
                 'required',

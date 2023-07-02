@@ -52,9 +52,9 @@
             data:{index:index,product_id:product_id,_token:_token},
             success:function(data){
                 if (data=='done') {
-                    alert('You Have Vote' +index+ 'Of 5 Star');
+                    alert('Bạn đã vote' +index+ 'trên tổng 5 sao');
                 } else {
-                    alert('Vote Error');
+                    alert('Vote bị lỗi');
                 }
             }
         });
@@ -109,7 +109,7 @@
             success:function(data){
                 location.reload();
                 if(data.code == 200){
-                    alert('Add Product Success')
+                    alert('Thêm giở hàng thành công')
                 }
             },
             error:function(err){

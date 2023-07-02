@@ -63,7 +63,13 @@
               <td>{{$item->serie}}</td>
               <td>{{$item->old_price}}</td>
               <td>{{ number_format($item->price_product, 0, ',', '.') }} VND</td>
-              <td>{{$item->amount}}</td>
+              <td>
+                @if ($item->amount <= 0)
+                  <p class="text text-danger">Hết Hàng</p>
+                @else
+                  {{$item->amount}}
+                @endif
+              </td>
               <td>{{$item->depscribe}}</td>
               <td>
                 <!-- Button trigger modal -->

@@ -158,6 +158,7 @@
             },
             data:{comment:comment,comment_id:comment_id,product_id:product_id},
                 success:function(data){
+                    location.reload();
                     $('.reply_comment'+comment_id).val('');
                     $('.notify_comment').html('<span class="text text-alert">Reply comment success</span>');
                 },
