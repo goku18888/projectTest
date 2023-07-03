@@ -49,7 +49,7 @@
 									<!-- Phone -->
 									<div class="col-md-6">
 										<label class="form-label">Phone *</label>
-										<input type="text" class="form-control" placeholder="" name="phone"
+										<input type="number" class="form-control" placeholder="" name="phone"
 											value="{{ $users->phone }}">
 									</div>
 									<!-- Email -->
@@ -144,8 +144,8 @@
 						</div> --}}
 					</div> <!-- Row END -->
 					<!-- button -->
-						<button type="submit" class="btn btn-primary btn-lg">Update profile</button>
-						<a href="{{ route('us.profile') }}" class="btn btn-primary btn-lg">Return</a>
+						<button type="submit" class="btn btn-primary btn-lg">Chỉnh Sửa Cá Nhân</button>
+						<a href="{{ route('us.profile') }}" class="btn btn-primary btn-lg">Quay Lại</a>
 					</div>
 				</form> <!-- Form END -->
 			</div>

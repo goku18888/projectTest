@@ -33,28 +33,39 @@ class ProfileController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $authAdmin = admins::where('id', Session::get('id'))->first();
+        $request->validate([
+            'phone' => ['required', 'regex:/^0\d{9}$/'],
+            'email' => ['required', 'regex:/^[A-Za-z0-9._%+-]+@gmail\.com$/'],
+        ]);
+
+        $admin = admins::findOrFail($id);
+        // Xử lý ảnh
         if ($request->hasFile('file_avatar')) {
-            $file = $request->file_avatar;
-            $fileName = time() . '.' . $file->getClientOriginalName('file_avatar');
-            Storage::disk('public')->put('img/admin/'. $fileName, File::get($file));
-            $request->merge([
-                'avatar' => $fileName
-            ]);
+            // Xóa ảnh cũ
+            Storage::disk('public')->delete('img/admin/' . $admin->avatar);
+        
+            // Lưu ảnh mới
+            $img_admin = Storage::disk('public')->put('img/admin/', $request->file('file_avatar'));
+        
+            // Cập nhật trường img_customer
+            $admin->avatar = $img_admin;
         }
-        // Kiểm tra trường `name_customer` mới
-        $newNameAdmin = $request->input('name_admin');
+        // Kiểm tra trường `name_admin` mới va cap nhap
+        $admin->name_admin = $request->input('name_admin');
+        $admin->phone = $request->input('phone');
+        $admin->email = $request->input('email');
+        $admin->address = $request->input('address');
         // Kiểm tra trùng lặp trong cơ sở dữ liệu
-        $existingAdmin = admins::where('name_admin', $newNameAdmin)
-        ->where('id', '!=', $authAdmin->id)
+        $existingAdmin = admins::where('name_admin', $admin->name_admin)
+        ->where('id', '!=', $admin->id)
         ->first();
 
         if ($existingAdmin) {
             return back()->with('error', 'Tên admin đã tồn tại trong cơ sở dữ liệu.');
         }
         // Cập nhật trường `name_customer`
-        $authAdmin->name_admin = $newNameAdmin;
-        $authAdmin->save();
+        $admin->save();
+        return redirect('admin/profile');
     }
     public function destroy($id)
     {

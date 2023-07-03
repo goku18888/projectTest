@@ -69,7 +69,7 @@
 									<div class="text-center">
 										<!-- Image upload -->
 										<div class="square position-relative display-2 mb-3">
-											<img src="{{ asset('/storage/img/admin/'.$admins->avatar) }}"
+											<img src="{{ asset('/storage/'.$admins->avatar) }}"
 												style="width: 297px;height: 246px;">
 										</div>
 										<!-- Button -->
@@ -81,7 +81,7 @@
 						</div>
 					</div> <!-- Row END -->
 
-					{{--
+					{{-- {{--
 					<!-- Social media detail -->
 					<div class="row mb-5 gx-5">
 						<div class="col-xxl-6 mb-5 mb-xxl-0">

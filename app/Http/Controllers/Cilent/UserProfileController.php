@@ -147,37 +147,44 @@ class UserProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-    $authUser = customers::where('id', session('user_login_id'))->first();
-
-    if ($request->hasFile('file_avatar')) {
-        $file = $request->file_avatar;
-        $fileName = time() . '.' . $file->getClientOriginalName('file_avatar');
-        Storage::disk('public')->put('img/cilent/' . $fileName, File::get($file));
-        $request->merge([
-            'img_customer' => $fileName
+        $request->validate([
+            'phone' => ['required', 'regex:/^0\d{9}$/'],
+            'email' => ['required', 'regex:/^[A-Za-z0-9._%+-]+@gmail\.com$/'],
         ]);
-    }
 
-    // Kiểm tra trường `name_customer` mới
-    $newNameCustomer = $request->input('name_customer');
+        $customer = customers::findOrFail($id);
+        // Xử lý ảnh
+        if ($request->hasFile('file_avatar')) {
+            // Xóa ảnh cũ
+            Storage::disk('public')->delete('img/cilent/' . $customer->img_customer);
+        
+            // Lưu ảnh mới
+            $img_customer = Storage::disk('public')->put('img/cilent/', $request->file('file_avatar'));
+        
+            // Cập nhật trường img_customer
+            $customer->img_customer = $img_customer;
+        }
 
-    // Kiểm tra trùng lặp trong cơ sở dữ liệu
-    $existingUser = customers::where('name_customer', $newNameCustomer)
-        ->where('id', '!=', $authUser->id)
-        ->first();
+        // Kiểm tra trường `name_customer` mới va cap nhap
+        $customer->name_customer = $request->input('name_customer');
+        $customer->phone = $request->input('phone');
+        $customer->email = $request->input('email');
+        $customer->address = $request->input('address');
 
-    if ($existingUser) {
-        return back()->with('error', 'Tên người dùng đã tồn tại trong cơ sở dữ liệu.');
-    }
+        // Kiểm tra trùng lặp trong cơ sở dữ liệu
+        $existingUser = customers::where('name_customer', $customer->name_customer)
+            ->where('id', '!=', $customer->id)
+            ->first();
 
-    // Cập nhật trường `name_customer`
-    $authUser->name_customer = $newNameCustomer;
-    $authUser->save();
+        if ($existingUser) {
+            return back()->with('error', 'Tên người dùng đã tồn tại trong cơ sở dữ liệu.');
+        }
 
-    return redirect()->route('us.profile');
+        // Cập nhật trường `name_customer`
+        $customer->save();
+
+        return redirect()->route('us.profile');
 }
-
-
 
     /**
      * Remove the specified resource from storage.

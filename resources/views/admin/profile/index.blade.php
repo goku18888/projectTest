@@ -75,7 +75,7 @@
 
 					<!-- Social media detail -->
 					<div class="row mb-5 gx-5">
-						<div class="col-xxl-6 mb-5 mb-xxl-0">
+						{{-- <div class="col-xxl-6 mb-5 mb-xxl-0">
 							<div class="bg-secondary-soft px-4 py-5 rounded">
 								<div class="row g-3">
 									<h4 class="mb-4 mt-0">Social media detail</h4>
@@ -126,7 +126,7 @@
 									</div>
 								</div> <!-- Row END -->
 							</div>
-						</div>
+						</div> --}}
 						<!-- button -->
 						<div class="gap-3 d-md-flex justify-content-md-end text-center">
 							<form action="{{ route('ad.destroyp',['id'=>$admin->id]) }}" method="POST">

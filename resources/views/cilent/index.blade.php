@@ -86,7 +86,7 @@
 						<span class="icon">
 							<i class="fa-solid fa-credit-card"></i>
 						</span>
-						<h3>Credit Card</h3>
+						<h3>Thẻ PayPal</h3>
 					</div>
 				</div>
 				<div class="col-md-4 col-sm-4 text-center">
@@ -94,7 +94,7 @@
 						<span class="icon">
 							<i class="fa-solid fa-wallet"></i>
 						</span>
-						<h3>Save Money</h3>
+						<h3>Tiết Kiệm Tiền</h3>
 					</div>
 				</div>
 				<div class="col-md-4 col-sm-4 text-center">
@@ -102,7 +102,7 @@
 						<span class="icon">
 							<i class="fa-solid fa-paper-plane"></i>
 						</span>
-						<h3>Free Delivery</h3>
+						<h3>Vận Chuyển</h3>
 					</div>
 				</div>
 			</div>
@@ -113,7 +113,7 @@
 			<div class="row animate-box">
 				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
 					<span>Cool Stuff</span>
-					<h2>Products.</h2>
+					<h2>Sản Phẩm.</h2>
 					<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
 				</div>
 			</div>
@@ -136,7 +136,7 @@
 					</div>
 				</div>
 				@empty
-				<h1 style="margin-left: 350px">There is no product like your search,pls type another name !!!</h1>
+				<h1 style="margin-left: 350px">Không có sản phẩm như bạn tìm kiếm,hãy thử một tên khác !</h1>
 				@endforelse
 			</div>
 			{{ $user->links() }}

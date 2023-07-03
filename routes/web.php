@@ -50,7 +50,7 @@ Route::put('reset-password', [LoginController::class, 'updatePassword'])->name('
 Route::prefix('admin')->name('ad.')->middleware('checkLogin')->group(function () {
     Route::get('/logout',[LoginController::class,'Logout'])->name('logout');
 
-    Route::get('profile',[ProfileController::class,'index'])->name('profile');
+    Route::get('/profile',[ProfileController::class,'index'])->name('profile');
     Route::get('/edit_profile/{id}',[ProfileController::class,'edit'])->name('profiledit');
     Route::put('/update_profile/{id}',[ProfileController::class,'update'])->name('profiled');
     Route::delete('/destroy_profile/{id}',[ProfileController::class,'destroy'])->name('destroyp');
