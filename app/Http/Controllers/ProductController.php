@@ -211,7 +211,9 @@ class ProductController extends Controller
         $search=$request->get('ab');
         $suppliers = suppliers::select('id', 'name_supplier')->get();
         $producttypes = producttypes::select('id', 'name_producttype')->get();
-        $products = products::where('id',$id)->first();
+        $products = products::with('imgproducts')
+        ->where('products.id',$id)
+        ->first();
 
         $Type=producttypes::all();
         $Sup=suppliers::all();

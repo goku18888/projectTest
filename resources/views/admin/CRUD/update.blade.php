@@ -69,7 +69,7 @@
                     <input type="file" class="form-control" id="exampleInputPassword1" placeholder="Picture..."
                       name="img_product" value="{{ $products->img_product }}">
                     @if($products->img_product)
-                      <img src="{{ asset('storage/'.$products->img_product) }}" alt="Main Product Image" width="100">
+                      <img src="{{ asset('/storage/'.$products->img_product) }}" alt="Main Product Image" width="100">
                     @else
                       <p>Chưa có tệp nào được chọn</p>
                     @endif
@@ -90,16 +90,12 @@
                     <label for="exampleInputPassword1">More Picture Product</label>
                     <input type="file" class="form-control" id="exampleInputPassword1" placeholder="Pictures..."
                       name="imgs_product[]" accept="image/*" multiple>
-                    @if($products->imgs_product)
-                      @if(!$products->imgs_product->isEmpty())
-                        @foreach($products->imgs_product as $image)
-                          <img src="{{ asset('product_images/'.$image->imgs_product) }}" alt="More Product Image" width="100">
-                        @endforeach
-                      @else
-                        <p>Chưa có tệp nào được chọn</p>
-                      @endif
+                    @if(!$products->imgproducts->isEmpty())
+                      @foreach($products->imgproducts as $imgproduct)
+                          <img src="{{ asset('/product_images/'.$imgproduct->imgs_product) }}" alt="Product Image" width="100">
+                      @endforeach
                     @else
-                      <p>Chưa có tệp nào được chọn</p>
+                        <p>Không có hình ảnh sản phẩm.</p>
                     @endif
                     @error('imgs_product')
                     <span style="color:red;">{{$message}}</span>

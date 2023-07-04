@@ -27,8 +27,8 @@
 				<h3>Sign In</h3>
 				<div class="d-flex justify-content-end social_icon">
 					<span><a href="{{ route('us.QuesTion') }}"><i class="fa-solid fa-lock"></i></a></span>
-					<span><i class="fab fa-google-plus-square"></i></span>
-					<span><i class="fa-brands fa-square-github"></i></span>
+					{{-- <span><i class="fab fa-google-plus-square"></i></span>
+					<span><i class="fa-brands fa-square-github"></i></span> --}}
 				</div>
 			</div>
 			<div class="card-body">

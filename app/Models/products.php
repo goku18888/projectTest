@@ -30,7 +30,7 @@ class products extends Model
         return $this->hasOne(suppliers::class, 'id', 'supplier_id');
     }
     public function imgproducts(){
-        return $this->hasMany(imgproducts::class,'id','products_id');
+        return $this->hasMany(imgproducts::class,'products_id', 'id');
     }
     public function comments()
     {
