@@ -31,7 +31,7 @@
     <meta charset="utf-8">
     <!--  This file has been downloaded from bootdey.com @bootdey on twitter -->
     <!--  All snippets are MIT license http://bootdey.com/license -->
-    <title>update my profile - Bootdey.com</title>
+    <title>update my profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -98,6 +98,12 @@
 					</div> --}}
 
 					<!-- change password -->
+					@if (session()->has("message"))
+						<div class="alert alert-danger">
+							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+							{{ session()->get('message') }}
+						</div>
+					@endif
 					<div class="col-xxl-6">
 						<div class="bg-secondary-soft px-4 py-5 rounded">
 							<div class="row g-3">
@@ -105,7 +111,7 @@
 								<!-- Old password -->
 								<div class="col-md-6">
 									<label for="exampleInputPassword1" class="form-label">Old password *</label>
-									<input type="password" id="first-name" class="form-control col-md-7 col-xs-12"  placeholder="Enter old password" name="oldpassword"> 
+									<input type="password" id="first-name" class="form-control col-md-7 col-xs-12"  placeholder="Enter old password" name="oldpassword">
 								</div>
 								<!-- New password -->
 								<div class="col-md-6">
@@ -115,7 +121,7 @@
 								<!-- Confirm password -->
 								<div class="col-md-12">
 									<label for="exampleInputPassword3" class="form-label">Confirm Password *</label>
-									<input type="password" id="first-name"  class="form-control col-md-7 col-xs-12"placeholder="Enter password confirmation"  name="password_confirmation"> 
+									<input type="password" id="first-name"  class="form-control col-md-7 col-xs-12"placeholder="Enter password confirmation"  name="password_confirmation">
 								</div>
 							</div>
 						</div>

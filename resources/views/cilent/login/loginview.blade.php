@@ -42,6 +42,11 @@
 								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 								{{ session()->get('chuadangnhap') }}
 							</div>
+						@elseif (session()->has("message"))
+						<div class="alert alert-danger alert-dismissible fade show">
+							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+							{{ session()->get('message') }}
+						</div>						
                         @endif
 				<form method="POST" action="{{ route('us.userPrLogin') }}">
 					@csrf

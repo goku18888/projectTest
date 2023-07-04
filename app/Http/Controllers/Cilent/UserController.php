@@ -56,6 +56,7 @@ class UserController extends Controller
 
             return redirect()->route('us.index');
         }catch(Throwable $e){
+            session()->flash('message', 'Mật khẩu sai hoặc tên đăng nhập không đúng,vui lòng thử lại.');
             return redirect()->route('us.userLogin');
         }
     }

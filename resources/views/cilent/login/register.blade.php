@@ -33,11 +33,11 @@
 			</div>
 			<div class="card-body">
 				@if (session()->has("qq"))
-                            <div class="alert alert-danger">
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                {{ session()->get('qq') }}
-                            </div>
-   				 @endif
+					<div class="alert alert-danger">
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						{{ session()->get('qq') }}
+					</div>
+   				@endif
 				<form method="POST" action="{{ route('us.ProRegister') }}" enctype="multipart/form-data">
 					@csrf
 					<div class="input-group form-group">

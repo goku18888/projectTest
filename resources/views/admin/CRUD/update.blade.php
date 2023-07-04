@@ -69,12 +69,12 @@
                     <input type="file" class="form-control" id="exampleInputPassword1" placeholder="Picture..."
                       name="img_product" value="{{ $products->img_product }}">
                     @if($products->img_product)
-                    <img src="{{ asset('storage/'.$products->img_product) }}" alt="Main Product Image" width="100">
+                      <img src="{{ asset('storage/'.$products->img_product) }}" alt="Main Product Image" width="100">
                     @else
-                    <p>Chưa có tệp nào được chọn</p>
+                      <p>Chưa có tệp nào được chọn</p>
                     @endif
                     @error('img_product')
-                    <span style="color:red;">{{$message}}</span>
+                      <span style="color:red;">{{$message}}</span>
                     @enderror
                   </div>
                   @if ($errors->any())

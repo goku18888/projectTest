@@ -74,33 +74,30 @@ class ChangePassController extends Controller
         $this->validate($request, [
             'oldpassword' => 'required',
             'newpassword' => 'required',
-            ]);
-     
-           $hashedPassword = session()->get('pass_word');
-     
-            if (Hash::check($request->oldpassword , $hashedPassword )) {
-     
-                if (!Hash::check($request->newpassword , $hashedPassword)) {
-     
-                  $users =admins::find(session()->get('id'));
-                  $users->pass_word = bcrypt($request->newpassword);
-                  admins::where( 'id' , session()->get('id'))->update( array( 'pass_word' =>  $users->pass_word));
-     
-                  session()->flash('message','password updated successfully');
-                  return redirect()->route('ad.profile');
-                }
-     
-                else{
-                      session()->flash('message','new password can not be the old password!');
-                      return redirect()->back();
-                    }
-               }
-     
-            else{
-                session()->flash('message','old password doesnt matched ');
+            'password_confirmation' => 'required',
+        ]);
+    
+        $user = admins::find(session()->get('id'));
+    
+        // Kiểm tra mật khẩu cũ
+        if (Hash::check($request->oldpassword, $user->pass_word)) {
+            // Kiểm tra mật khẩu mới và xác nhận mật khẩu
+            if ($request->newpassword === $request->password_confirmation) {
+                $user->pass_word = bcrypt($request->newpassword);
+                $user->save();
+    
+                session()->flash('message', 'Mật khẩu đã được cập nhật thành công');
+                return redirect()->route('ad.profile');
+            } else {
+                session()->flash('message', 'Mật khẩu mới không trùng khớp với xác nhận mật khẩu');
                 return redirect()->back();
-                }
-           }
+            }
+        } else {
+            session()->flash('message', 'Mật khẩu cũ không đúng');
+            return redirect()->back();
+        }
+    }
+    
 
     /**
      * Remove the specified resource from storage.
