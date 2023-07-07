@@ -30,41 +30,40 @@
                                 <form action="">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="">Chon Thanh Pho</label>
+                                        <label for="">Chọn Thành Phố</label>
                                         <select name="city" id="city" class="choose city">
-                                            <option value="">>---Chon Thanh Pho---<</option>
+                                            <option value="">>---Chọn Thành Phố---<</option>
                                             @foreach ($city as $item)
                                                 <option value="{{ $item->matp }}">{{ $item->name_city }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Chon Quan Huyen</label>
+                                        <label for="">Chọn Quận Huyện</label>
                                         <select name="province" id="province" class="choose province">
-                                            <option value="">>---Chon Quan Huyen---<</option>
+                                            <option value="">>---Chọn Quận Huyện---<</option>
                                             @foreach ($province as $provin)
                                                 <option value="{{ $provin->maqh }}">{{ $provin->name_quanhuyen }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Chon Xa Phuong</label>
+                                        <label for="">Chọn Xã Phường</label>
                                         <select name="wards" id="wards" class="wards">
-                                            <option value="">>---Chon Xa Phuong---<</option>
+                                            <option value="">>---Chọn Xã Phường---<</option>
                                             @foreach ($wards as $ward)
                                                 <option value="{{ $ward->xaid }}">{{ $ward->name_xaphuong }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Phi Van Chuyen</label>
+                                        <label for="">Phí Vận Chuyển</label>
                                         <input type="text" name="fee_ship" class="fee_ship">
                                     </div>
-                                    <button type="button" name="add_delivery" class="btn btn-info add_delivery">Them Phi Van Chuyen</button>
+                                    <button type="button" name="add_delivery" class="btn btn-info add_delivery">Thêm Phí Vận Chuyển</button>
                                 </form>
                             </div>
-                            <div id="load_delivery">
-                            </div>
+                            <div id="load_delivery"></div>
                         </div>
                     </div>
                 </div>

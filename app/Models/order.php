@@ -17,6 +17,8 @@ class order extends Model
         'shipping_id',
         'total',
         'status',
+        'destroy',
+        'code_ship',
     ];
 
     public function customers()

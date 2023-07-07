@@ -110,12 +110,16 @@ class PaypalController extends Controller
         $shippingFee = session()->get('fee');
         $customer = session()->get('user_login_id');
         $cart = session()->get('cart');
+        $shippingInfo = customers::where('id',$customer)->first();
+        $shippingName=$request->shipping_name ? $request->shipping_name : $shippingInfo->name_customer;
+        $shippingEmail=$request->shipping_email ? $request->shipping_name : $shippingInfo->name_customer;
+        $shippingPhone=$request->shipping_phone ? $request->shipping_name : $shippingInfo->name_customer;
         //validate
         $validated = $request->validate([
-            'shipping_name' => 'bail|required|max:255',
-            'shipping_email' => ['required', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/'],
+            // 'shipping_name' => 'bail|required|max:255',
+            // 'shipping_email' => ['required', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/'],
             'shipping_address' => ['required'],
-            'shipping_phone' => ['required', 'regex:/^0\d{9}$/'],
+            // 'shipping_phone' => ['required', 'regex:/^0\d{9}$/'],
             'shipping_note' => 'required',
         ]);
         //lay total
@@ -131,12 +135,12 @@ class PaypalController extends Controller
             //tao bang shipping
             $ship = shipping::create([
                 'customer_id' => session('user_login_id'),
-                'shipping_name' => $request->shipping_name,
-                'shipping_email' => $request->shipping_email,
+                'shipping_name' => $shippingName,
+                'shipping_email' => $shippingEmail,
                 'shipping_address' => $request->shipping_address,
-                'shipping_phone' => $request->shipping_phone,
+                'shipping_phone' => $shippingPhone,
                 'shipping_note' => $request->shipping_note,
-                'status' => 1,
+                'status' => 0,
             ]);
             //tao bang order
             $order = order::create([

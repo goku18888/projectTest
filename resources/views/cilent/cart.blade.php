@@ -87,12 +87,12 @@
                         <th scope="row">{{ $item['serie'] }}</th>
                         <th scope="row"><img src="{{ asset('/storage/'.$item['img_product']) }}" alt="" style="width: 70px;height: 70px;"></th>
                         <td>{{ $item['name_product'] }}</td>
-                        <td>{{ number_format($item['price_product']) }}$</td>
+                        <td>{{ number_format($item['price_product']) }} VND</td>
                         <td>
                             <input type="number" value="{{ $item['amount'] }}" min="1" class="amount">
                         </td>
                         <td>
-                            {{ number_format($item['price_product'] * $item['amount']) }}$
+                            {{ number_format($item['price_product'] * $item['amount']) }} VND
                         </td>
                         <td>
                             <a href="#" data-id="{{ $id }}" class="btn btn-primary cart_update">Sửa giỏ hàng</a>
@@ -110,7 +110,7 @@
                 @csrf
                 <table border="0px" style="margin-left: auto;margin-right: auto;">
                     <tr>
-                        <th scope="col"><input type="text" placeholder="Email..." name="shipping_email"></th>
+                        <th scope="col"><input type="text" placeholder="{{ $shippingInfo->email }}" name="shipping_email"></th>
                         <td>
                             @error('shipping_email')
                                 <span style="color:red;">{{$message}}</span>
@@ -118,7 +118,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col"><input type="text" placeholder="Tên..." name="shipping_name"></th>
+                        <th scope="col"><input type="text" placeholder="{{ $shippingInfo->name_customer }}" name="shipping_name"></th>
                         <td>
                             @error('shipping_name')
                                 <span style="color:red;">{{$message}}</span>
@@ -134,7 +134,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col"><input type="text" placeholder="Điện Thoại..." name="shipping_phone"></th>
+                        <th scope="col"><input type="text" placeholder="{{ $shippingInfo->phone }}" name="shipping_phone"></th>
                         <td>
                             @error('shipping_phone')
                                 <span style="color:red;">{{$message}}</span>

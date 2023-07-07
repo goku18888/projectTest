@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('shipping_id');
             $table->float('total');
             $table->integer('status')->default(0);
+            $table->string('destroy');
+            $table->string('code_ship')->default(null);
             $table->timestamps();
         });
     }

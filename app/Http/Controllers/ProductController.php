@@ -398,9 +398,8 @@ class ProductController extends Controller
     }
     public function userBill(Request $request,$id){
         $search=$request->get('search-bill');
-        $bill=order::orderByRaw('order_status = 1')
-        ->orderBy('created_at','DESC')
-        ->select('order.id','order.customer_id','total','order.created_at','order.status as order_status','destroy','shipping.status as shipping_status')
+        $bill=order::orderBy('created_at','DESC')
+        ->select('order.id','order.customer_id','total','order.created_at','order.status as order_status','destroy','shipping.status as shipping_status','order.code_ship')
         ->join('shipping','order.shipping_id','shipping.id')
         ->where('order.customer_id',$id)
         ->paginate(6);

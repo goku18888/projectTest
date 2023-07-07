@@ -235,6 +235,10 @@ class IndexController extends Controller
         ],200);
      }
      public function showCart(Request $request){
+        //kiem tra nguoi dung ton tai hay khong
+        $customer = session()->get('user_login_id');
+        $shippingInfo = customers::where('id',$customer)->first();
+        //hien city,quan huyen
         $city = City::orderBy('matp', 'ASC')->get();
         $province = Province::orderBy('maqh', 'ASC')->get();
         $wards = Wards::orderBy('xaid', 'ASC')->get();
@@ -247,9 +251,10 @@ class IndexController extends Controller
                 'city'=>$city,
                 'province'=>$province,
                 'wards'=>$wards,
+                'shippingInfo'=>$shippingInfo,
             ]);
         }else{
-            return redirect()->route('us.index')->with('1','You didnt add any product in your Cart yet!!');
+            return redirect()->route('us.index')->with('1','Bạn chưa đặt hàng hoặc chưa có tài khoản,vui lòng kiểm tra !!!');
         }
      }
      public function updateCart(Request $request){
@@ -281,12 +286,16 @@ class IndexController extends Controller
         $shippingFee = session()->get('fee');
         $customer = session()->get('user_login_id');
         $cart = session()->get('cart');
+        $shippingInfo = customers::where('id',$customer)->first();
+        $shippingName=$request->shipping_name ? $request->shipping_name : $shippingInfo->name_customer;
+        $shippingEmail=$request->shipping_email ? $request->shipping_name : $shippingInfo->name_customer;
+        $shippingPhone=$request->shipping_phone ? $request->shipping_name : $shippingInfo->name_customer;
         //validate
         $validated = $request->validate([
-            'shipping_name' => 'bail|required|max:255',
-            'shipping_email' => ['required', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/'],
+            // 'shipping_name' => 'bail|required|max:255',
+            // 'shipping_email' => ['required', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/'],
             'shipping_address' => ['required'],
-            'shipping_phone' => ['required', 'regex:/^0\d{9}$/'],
+            // 'shipping_phone' => ['required', 'regex:/^0\d{9}$/'],
             'shipping_note' => 'required',
         ]);
         //create order_date
@@ -294,10 +303,10 @@ class IndexController extends Controller
         //tao bang shipping
         $ship = shipping::create([
             'customer_id' => session('user_login_id'),
-            'shipping_name' => $request->shipping_name,
-            'shipping_email' => $request->shipping_email,
+            'shipping_name' => $shippingName,
+            'shipping_email' => $shippingEmail,
             'shipping_address' => $request->shipping_address,
-            'shipping_phone' => $request->shipping_phone,
+            'shipping_phone' => $shippingPhone,
             'shipping_note' => $request->shipping_note,
             'status' => 0,
         ]);

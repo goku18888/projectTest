@@ -92,13 +92,13 @@
                                     @endphp
                                 <tr>
                                     <td>{{ $cart['name_product'] }}</td>
-                                    <td>{{ $cart['price_product'] }} $</td>
+                                    <td>{{ number_format($cart['price_product'], 0, ',', '.') }} VND</td>
                                     <td>{{ $cart['amount'] }}</td>
-                                    <td>{{ $sub_total }}</td>
+                                    <td>{{ number_format($sub_total, 0, ',', '.') }} VND</td>
                                 </tr>
                                 @endforeach
                                 <tr>
-                                    <td colspan="4" align="right">Tổng Tiền Thanh Toán:{{ $total }} $</td>
+                                    <td colspan="4" align="right">Tổng Tiền Thanh Toán:{{ number_format($total, 0, ',', '.') }} VND</td>
                                 </tr>
                             </tbody>
                         </table>

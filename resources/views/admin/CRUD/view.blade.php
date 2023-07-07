@@ -61,7 +61,7 @@
               <td>{{$item->id}}</td>
               <td>{{$item->name_product}}</td>
               <td>{{$item->serie}}</td>
-              <td>{{$item->old_price}}</td>
+              <td>{{ number_format($item->old_price, 0, ',', '.') }} VND</td>
               <td>{{ number_format($item->price_product, 0, ',', '.') }} VND</td>
               <td>
                 @if ($item->amount <= 0)

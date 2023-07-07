@@ -55,7 +55,7 @@ class OrderDashboard extends Controller
         $product=products::all()->count();
         $customer=customers::all()->count();
         $bill=bills::all()->count();
-        $product_views=products::orderBy('product_views','DESC')->take(6)->get();
+        $product_views=products::orderBy('product_views','DESC')->take(8)->get();
         
         //don hang ban dc 7ngay
         $sub7days=Carbon::now('Asia/Ho_Chi_Minh')->subDays(7)->toDateString();

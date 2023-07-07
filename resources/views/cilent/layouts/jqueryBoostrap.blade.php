@@ -107,9 +107,12 @@
             url:urlCart,
             dataType:'json',
             success:function(data){
-                location.reload();
+                setTimeout(function() {
+                    location.reload();
+                }, 600);
                 if(data.code == 200){
-                    alert('Thêm giở hàng thành công')
+                    $('#custom-alert').html('<h2 class="text text-success">Hàng bạn chọn đã được thêm vào giỏ</h2>');
+                    $('#custom-alertt').html('<h2 class="text text-success">Hàng bạn chọn đã được thêm vào giỏ</h2>');
                 }
             },
             error:function(err){

@@ -8,10 +8,10 @@
 	@include('cilent.layouts.topbar')
 	<div class="container">
 	@if (session()->has("1"))
-                            <div class="alert alert-danger">
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                {{ session()->get('1') }}
-                            </div>
+		<div class="alert alert-danger">
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			{{ session()->get('1') }}
+		</div>
     @endif
 	</div>
 	<aside id="fh5co-hero" class="js-fullheight">
@@ -23,7 +23,7 @@
 		   			<div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
 		   				<div class="slider-text-inner">
 		   					<div class="desc">
-		   						<span class="price">$800</span>
+		   						<span class="price">{{ number_format(14700000, 0, ',', '.') }} VND</span>
 		   						<h2>Samsung Galaxy Z Flip4</h2>
 		   						<p>Có lẽ điện thoại gập đã không còn là cái tên quá xa lạ bởi nhiều ông lớn trong ngành sản xuất thiết bị di động đã cho ra mắt khá nhiều sản phẩm có thiết kế tương tự, gần đây nhất thì có sự góp mặt của chiếc flagship đến từ nhà Samsung mang tên Galaxy Z Flip4.</p>
 			   					{{-- <p><a href="single.html" class="btn btn-primary btn-outline btn-lg">Purchase Now</a></p> --}}
@@ -114,7 +114,7 @@
 				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
 					<span>Cool Stuff</span>
 					<h2>Sản Phẩm.</h2>
-					<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
+					<div id="custom-alert"></div>
 				</div>
 			</div>
 			<div class="row">
@@ -139,6 +139,7 @@
 				<h1 style="margin-left: 350px">Không có sản phẩm như bạn tìm kiếm,hãy thử một tên khác !</h1>
 				@endforelse
 			</div>
+			<div id="custom-alertt" style="display: flex;align-items: center;justify-content: center;"></div>
 			{{ $user->links() }}
 		</div>
 	</div>
@@ -279,6 +280,7 @@
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="fa-solid fa-arrow-up"></i></a>
 	</div>
+	
 	
 	@include('cilent.layouts.jqueryBoostrap')
 

@@ -40,7 +40,7 @@ class UpdateRequest extends FormRequest
             'phone' => [
                 'bail',
                 'required',
-                'integer',
+                'string',
             ],
         ];
     }

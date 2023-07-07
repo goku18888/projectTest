@@ -70,6 +70,18 @@ class DeliveryController extends Controller
         $feeship->save();
         return response()->json(['message' => 'Cập nhật thành công']);
     }
+    public function update_code_delivery(Request $request){
+        $order_id = $request->input('order_id');
+        $order_value = $request->input('order_value');
+        $codeShip = order::where('id', $order_id)->first();
+
+        if (!$codeShip) {
+            return response()->json(['message' => 'Không tìm thấy bản ghi với id cụ thể'], 404);
+        }
+        $codeShip->code_ship = $order_value;
+        $codeShip->save();
+        return response()->json(['message' => 'Cập nhật thành công']);
+    }
     public function delivery(Request $request)
     {
         $search = $request->get('comment');

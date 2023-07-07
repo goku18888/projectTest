@@ -128,6 +128,8 @@ Route::prefix('admin')->name('ad.')->middleware('checkLogin')->group(function ()
     Route::post('/insert-delivery',[DeliveryController::class,'insert_delivery'])->name('insert_delivery');
     Route::post('/select-feeship',[DeliveryController::class,'select_feeship'])->name('select_feeship');
     Route::post('/update-delivery',[DeliveryController::class,'update_delivery'])->name('update_delivery');
+    //Code Ship
+    Route::post('/update-code-delivery',[DeliveryController::class,'update_code_delivery'])->name('update_code_delivery');
 });
 //CILENT
 // Auth::routes(['verify' => true]);->middleware('verified')

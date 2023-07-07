@@ -89,7 +89,7 @@ class DashboardController extends Controller
         $product=products::all()->count();
         $customer=customers::all()->count();
         $bill=bills::all()->count();
-        $product_views=products::orderBy('product_views','DESC')->take(6)->get(); 
+        $product_views=products::orderBy('product_views','DESC')->take(8)->get(); 
 
         return view('admin.dashboard',[
             'messages' => $messages,

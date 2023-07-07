@@ -56,7 +56,7 @@ class MoneyDashboard extends Controller
         $product=products::all()->count();
         $customer=customers::all()->count();
         $bill=order::all()->count();
-        $product_views=products::orderBy('product_views','DESC')->take(6)->get();
+        $product_views=products::orderBy('product_views','DESC')->take(8)->get();
         
         //money 7 ngay
         $sub7days=Carbon::now('Asia/Ho_Chi_Minh')->subDays(7)->toDateString();
@@ -81,17 +81,17 @@ class MoneyDashboard extends Controller
 
         for ($year = 2022; $year <= 2023; $year++) {
             $suboneyear = Carbon::createFromDate($year, 1, 1)->startOfYear();
-            $now = Carbon::createFromDate($year, 12, 31)->endOfYear();
+            $now_money = Carbon::createFromDate($year, 12, 31)->endOfYear();
 
             $tong_tien_mua[$year] = DB::table('bills')
                 ->join('products', 'bills.product_id', '=', 'products.id')
-                ->whereBetween('order_date', [$suboneyear, $now])
+                ->whereBetween('order_date', [$suboneyear, $now_money])
                 ->select(DB::raw('SUM(products.old_price * products.amount) as total'))
                 ->value('total');
 
             $tong_tien_ban[$year] = DB::table('order')
                 ->join('bills','bills.order_id','order.id')
-                ->whereBetween('order_date', [$suboneyear, $now])
+                ->whereBetween('order.created_at', [$suboneyear, $now_money])
                 ->sum('total');
         }
 

@@ -178,6 +178,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="notify_status"></div>
+        <div id="notify_addCart"></div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
@@ -189,6 +190,7 @@
                 <th>Status</th>
                 <th>Reason</th>
                 <th>Status Ship</th>
+                <th>Code Ship</th>
                 <th>Time</th>
                 <th colspan="3">Settings</th>
   
@@ -202,6 +204,7 @@
                 <th>Status</th>
                 <th>Reason</th>
                 <th>Status Ship</th>
+                <th>Code Ship</th>
                 <th>Time</th>
                 <th colspan="3">Settings</th>
               </tr>
@@ -230,6 +233,7 @@
                         <p class="text text-success">Thanh Toán Bằng Thẻ PayPal</p>
                     @endif
                 </td>
+                <td contenteditable data-order_id="{{$item->id}}" class="code_ship_edit">{{$item->code_ship}}</td>
                 <td>{{$item->created_at}}</td>
                 <td><a target="_blank" href="{{ route('ad.print_bill',['id'=>$item->id]) }}">PDF</a></td>
                 <td><a href="{{route('ad.billDetails',['id'=>$item->id]) }}" class="btn btn-primary">Chi Tiết</a></td>
@@ -306,27 +310,49 @@
         var status = $(this).data('order_status');
         var order_id = $(this).data('order_id');
         var customer_id = $(this).attr('id');
-        if (status==1) {
-            var alert='Đã Chuyển Thành Đang Giao Hàng';
-        }else{
-            var alert='Đã Chuyển Thành Nhận Hàng';
+        var confirmationMessage = '';
+        
+        if (status == 1) {
+            confirmationMessage = 'Bạn có chắc chắn muốn chuyển thành trạng thái "Đang Giao Hàng"?';
+        } else {
+            confirmationMessage = 'Bạn có chắc chắn muốn chuyển thành trạng thái "Nhận Hàng"?';
         }
-        $.ajax({
-        type:"POST",
-        url:"{{ url('/admin/status-change') }}",
-        headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data:{status:status,order_id:order_id,customer_id:customer_id},
-            success:function(data){
-                location.reload();
-                $('.notify_status').html('<span class="text text-alert">'+alert+'</span>');
-            },
-            error: function(xhr, status, error) {
-                console.log(xhr.responseText); // Hiển thị lỗi chi tiết trong console
-            }
-        });
+        
+        if (confirm(confirmationMessage)) {
+            $.ajax({
+                type: "POST",
+                url: "{{ url('/admin/status-change') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {status: status, order_id: order_id, customer_id: customer_id},
+                success: function(data) {
+                    location.reload();
+                    var alertMessage = (status == 1) ? 'Đã Chuyển Thành Đang Giao Hàng' : 'Đã Chuyển Thành Nhận Hàng';
+                    $('#notify_addCart').html('<span class="text text-success">' + alertMessage + '</span>');
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText); // Hiển thị lỗi chi tiết trong console
+                }
+            });
+        }
     });
 </script>
+<script>
+    $(document).on('blur','.code_ship_edit',function(){
+      var order_id=$(this).data('order_id');
+      var order_value=$(this).text();
+      var _token=$('input[name="_token"]').val();
+      $.ajax({
+        url:"{{url('/admin/update-code-delivery') }}",
+        method:"POST",
+        data:{order_value:order_value,order_id:order_id,_token:_token},
+        success:function(data){
+          location.reload();
+        }
+      });
+    });    
+</script>
+
 </body>
 </html>
