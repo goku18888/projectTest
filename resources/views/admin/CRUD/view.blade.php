@@ -144,3 +144,26 @@
   </div>
 </div>
 {{ $admin->links() }}
+<script>
+  $('#products_admin_keywords').keyup(function(){
+    var query=$(this).val();
+      if (query!='') {
+        var _token=$('input[name="_token"]').val();
+        $.ajax({
+          url:"{{ url('/user/autocomplete-ajax-products-view') }}",
+          type:"POST",
+          data:{query:query,_token:_token},
+          success:function(data){
+            $('#search_ajax_products_view').fadeIn();
+            $('#search_ajax_products_view').html(data);
+          }
+        });
+      }else{
+        $('#search_ajax_products_view').fadeOut();
+      }
+  });
+  $(document).on('click','.li_search_ajax_products_view',function(){
+    $('#products_admin_keywords').val($(this).text());
+    $('#search_ajax_products_view').fadeOut();
+  });
+</script>

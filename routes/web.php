@@ -67,6 +67,8 @@ Route::prefix('admin')->name('ad.')->middleware('checkLogin')->group(function ()
     Route::get('/edit/{id}',[ProductController::class,'edit'])->name('edit');
     Route::put('/update/{id}',[ProductController::class,'update'])->name('update');
     Route::get('/products/api',[ProductController::class,'api'])->name('proapi');
+    //serach js
+    Route::post('/autocomplete-ajax-products-view',[ProductController::class,'autocomplete_ajax_products_view'])->name('autocomplete_ajax_products_view');
     //messenger
     Route::post('/ajax-update-status',[ProductController::class,'updateStatus'])->name('updateStatus');
     //billSenger

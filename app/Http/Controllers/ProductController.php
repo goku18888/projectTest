@@ -83,6 +83,18 @@ class ProductController extends Controller
             'Sup' => $Sup,
         ]);
     }
+    public function autocomplete_ajax_products_view(Request $request){
+        $data=$request->all();
+        if ($data['query']) {
+            $product=products::where('name_product','LIKE','%'.$data['query'].'%')->get();
+            $output='<ul class="dropdown-menu" style="display:block; position:relative">';
+            foreach ($product as $key => $val) {
+                $output.='<li class="li_search_ajax_products_view"><a href="#">'.$val->name_product.'</a></li>';
+            }
+            $output.='</ul>';
+            echo $output;
+        }
+    }
 
     public function updateStatus(Request $request)
     {
