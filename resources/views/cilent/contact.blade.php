@@ -31,15 +31,15 @@
                         <div class="contact-info">
                             <h3>Contact Information</h3>
                             <ul>
-                                <li class="fa-solid fa-location-dot"> 198 West 21th Street, <br> Suite 721 New York NY 10016</li>
-                                <li class="fa-solid fa-phone"><a href="tel://1234567920"> +84373362692</a></li><br>
+                                <li class="fa-solid fa-location-dot"> 158 Pho Hue, <br> Hai Ba Trung, Ha Noi </li> <br>
+                                <li class="fa-solid fa-phone"><a href="tel://0373362692"> +84 373362692</a></li><br>
                                 <li class="fa-solid fa-envelope"><a href="mailto:hoctap438@gmail.com" target="_blank"> hoctap438@gmail.com</a></li>
                             </ul>
                         </div>
     
                     </div>
                     <div class="col-md-6 animate-box">
-                        <h3>Get In Touch</h3>
+                        <h3>Liên Hệ</h3>
                         <form action="{{ route('us.storefeedback') }}" method="POST">
                             @csrf
                             {{-- <div class="row form-group">
@@ -55,25 +55,25 @@
                             <div class="row form-group">
                                 <div class="col-md-12">
                                     <!-- <label for="email">Email</label> -->
-                                    <input type="text" id="email" class="form-control" placeholder="Your email address">
+                                    <input type="text" id="email" class="form-control" placeholder="Email của bạn...">
                                 </div>
                             </div>
     
                             <div class="row form-group">
                                 <div class="col-md-12">
                                     <!-- <label for="subject">Subject</label> -->
-                                    <input type="text" id="subject" class="form-control" placeholder="Your subject of this message" name="subject">
+                                    <input type="text" id="subject" class="form-control" placeholder="Tiêu đề email của bạn..." name="subject">
                                 </div>
                             </div>
     
                             <div class="row form-group">
                                 <div class="col-md-12">
                                     <!-- <label for="message">Message</label> -->
-                                    <textarea name="something" id="message" cols="30" rows="10" class="form-control" placeholder="Say something about us"></textarea>
+                                    <textarea name="something" id="message" cols="30" rows="10" class="form-control" placeholder="Hãy miêu tả vấn đề bạn đang gặp..."></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="submit" value="Send Message" class="btn btn-primary">
+                                <input type="submit" value="Gửi mail" class="btn btn-primary">
                             </div>
     
                         </form>		
