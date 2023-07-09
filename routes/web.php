@@ -173,6 +173,8 @@ Route::prefix('user')->name('us.')->group(function () {
     Route::post('/calculate-fee',[DeliveryController::class,'calculate_fee'])->name('calculate-fee');
     Route::get('/info-customer',[DeliveryController::class,'info_customer'])->name('info-customer');
     Route::post('/send-info',[DeliveryController::class,'send_info'])->name('send-info');
+    //preview cart
+    Route::get('/preview_cart',[IndexController::class,'preview_Cart'])->name('preview_Cart');
     //Profile
     Route::get('profile',[CilentUserProfileController::class,'index'])->name('profile');
     Route::get('/edit_profile/{id}',[CilentUserProfileController::class,'edit'])->name('profiledit');

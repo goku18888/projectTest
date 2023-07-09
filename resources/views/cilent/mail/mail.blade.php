@@ -103,7 +103,7 @@
                             </tbody>
                         </table>
                 </div>
-                <p style="color: #fff;">Mọi Chi Tiết Liên Hệ Với Chúng Tôi Tại Website: <a href="http://project.test/user/index">Shop</a>Hoặc Liên Hệ Qua Hotline:0912315465
+                <p style="color: #fff;">Mọi Chi Tiết Liên Hệ Với Chúng Tôi Tại Website: <a href="http://project.test/user/index">Shop</a> Hoặc Liên Hệ Qua Hotline:0912315465
                 .Xin Cảm Ơn Đã Đặt Hàng Của Chúng Tôi.</p>
             </div>
         </div>

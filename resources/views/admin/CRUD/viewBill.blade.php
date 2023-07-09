@@ -242,8 +242,8 @@
                         <input type="button" data-order_status="1" data-order_id="{{ $item->id }}" id="{{ $item->customer_id }}" class="btn btn-danger btn-xs status_order_btn" value="Đang Vận Chuyển Hàng">
                     @elseif($item->order_status==1)
                         <input type="button" data-order_status="2" data-order_id="{{ $item->id }}" id="{{ $item->customer_id }}" class="btn btn-success btn-xs status_order_btn" value="Đã Giao Hàng">
-                    @elseif($item->order_status==2)
-                        <input type="button" data-order_status="1" data-order_id="{{ $item->id }}" id="{{ $item->customer_id }}" class="btn btn-primary btn-xs status_order_btn" value="Đang Vận Chuyển Hàng">
+                    {{-- @elseif($item->order_status==2)
+                        <input type="button" data-order_status="1" data-order_id="{{ $item->id }}" id="{{ $item->customer_id }}" class="btn btn-primary btn-xs status_order_btn" value="Đang Vận Chuyển Hàng"> --}}
                     @endif
                 </td>
                 {{-- <td>

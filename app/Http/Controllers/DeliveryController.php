@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\admins;
 use App\Models\bills;
 use Illuminate\Http\Request;
 use App\Models\City;
+use App\Models\customers;
 use App\Models\producttypes;
 use App\Models\Province;
 use App\Models\suppliers;
@@ -13,6 +15,8 @@ use App\Models\Wards;
 use App\Models\Feeship;
 use App\Models\order;
 use App\Models\shipping;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
@@ -70,18 +74,39 @@ class DeliveryController extends Controller
         $feeship->save();
         return response()->json(['message' => 'Cập nhật thành công']);
     }
-    public function update_code_delivery(Request $request){
+    public function update_code_delivery(Request $request)
+    {
         $order_id = $request->input('order_id');
         $order_value = $request->input('order_value');
         $codeShip = order::where('id', $order_id)->first();
-
+    
         if (!$codeShip) {
             return response()->json(['message' => 'Không tìm thấy bản ghi với id cụ thể'], 404);
         }
+    
         $codeShip->code_ship = $order_value;
+        $codeShip->status = 1;
         $codeShip->save();
+    
+        // Send mail confirmation to client
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
+        $title_mail = "Đơn Hàng Đang Trên Đường" . ' ' . $now;
+        $customer = customers::select('email')->find($codeShip->customer_id);
+    
+        if (!$customer) {
+            return response()->json(['message' => 'Không tìm thấy thông tin khách hàng'], 404);
+        }
+    
+        $data = ['order_id' => $order_id, 'order_value' => $order_value];
+    
+        Mail::send('admin.mail.code_ship', $data, function ($message) use ($title_mail, $customer) {
+            $message->to($customer->email)->subject($title_mail);
+            $message->from(env('MAIL_USERNAME'), $title_mail);
+        });
+    
         return response()->json(['message' => 'Cập nhật thành công']);
     }
+    
     public function delivery(Request $request)
     {
         $search = $request->get('comment');

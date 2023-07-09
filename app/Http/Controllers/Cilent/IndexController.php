@@ -257,6 +257,29 @@ class IndexController extends Controller
             return redirect()->route('us.index')->with('1','Bạn chưa đặt hàng hoặc chưa có tài khoản,vui lòng kiểm tra !!!');
         }
      }
+     public function preview_Cart(Request $request){
+        //kiem tra nguoi dung ton tai hay khong
+        $customer = session()->get('user_login_id');
+        $shippingInfo = customers::where('id',$customer)->first();
+        //hien city,quan huyen
+        $city = City::orderBy('matp', 'ASC')->get();
+        $province = Province::orderBy('maqh', 'ASC')->get();
+        $wards = Wards::orderBy('xaid', 'ASC')->get();
+        $search=$request->get('ab');
+        $carts=session()->get('cart');
+        if($carts){
+            return view('cilent.preview_cart',[
+                'carts'=>$carts,
+                'search'=>$search,
+                'city'=>$city,
+                'province'=>$province,
+                'wards'=>$wards,
+                'shippingInfo'=>$shippingInfo,
+            ]);
+        }else{
+            return redirect()->route('us.index')->with('1','Bạn chưa đặt hàng hoặc chưa có tài khoản,vui lòng kiểm tra !!!');
+        }
+     }
      public function updateCart(Request $request){
         $search=$request->get('abc');
         if($request->id && $request->amount){

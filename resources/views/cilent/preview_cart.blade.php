@@ -13,14 +13,14 @@
                 <div class="col-md-8 col-md-offset-2 text-center">
                     <div class="display-t">
                         <div class="display-tc animate-box" data-animate-effect="fadeIn">
-                            <h1>Carts</h1>
+                            <h1>Preview Cart</h1>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </header>
-    <div style="text-align: center;">
+    {{-- <div style="text-align: center;">
         <form action="">
             @csrf
             <div><h1 style="color: aqua;">Chọn Vùng Vận Chuyển</h1></div>
@@ -54,7 +54,7 @@
             <input type="button" value="Tính Phí Vận Chuyển" name="calculate_delivery"
                 class="btn btn-primary btn-sm calculate_delivery">
         </form>
-    </div>
+    </div> --}}
     <div class="cart delete_cart_url" data-url="{{ route('us.deleteCart') }}">
         @if (session()->has("outofstock"))
             <div class="alert alert-danger">
@@ -71,7 +71,6 @@
                     <th scope="col">Giá Sản Phẩm</th>
                     <th scope="col">Bao Nhiêu Sản Phẩm</th>
                     <th scope="col">Thành Tiền</th>
-                    <th scope="col">Action</th>
                 </tr>
             </thead>
             @php
@@ -88,31 +87,25 @@
                         <td>{{ $item['name_product'] }}</td>
                         <td>{{ number_format($item['price_product']) }} VND</td>
                         <td>
-                            <input type="number" value="{{ $item['amount'] }}" min="1" class="amount">
+                            {{ $item['amount'] }}
                         </td>
                         <td>
                             {{ number_format($item['price_product'] * $item['amount']) }} VND
-                        </td>
-                        <td>
-                            <a href="#" data-id="{{ $id }}" class="btn btn-primary cart_update">Sửa giỏ hàng</a>
-                            <a href="#" data-id="{{ $id }}" class="btn btn-danger cart_delete">Xóa</a>
-                            @php
-                                $customer_id = session()->get('user_login_id');
-                            @endphp
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
         @if (!empty(session()->get('user_login_id')&&(session()->get('fee'))))
-            <div style="display: flex;justify-content: center;align-items: center;">
-                <button style="padding: 10px 20px;font-size: 18px;"><a href="{{ route('us.preview_Cart') }}">Thanh Toán</a></button>
-            </div>
-            {{-- <form action="{{ route('us.addBill') }}" method="POST">
+        <div class="shipping-container">
+            <form action="{{ route('us.addBill') }}" method="POST">
                 @csrf
                 <table border="0px" style="margin-left: auto;margin-right: auto;">
                     <tr>
-                        <th scope="col"><input type="text" placeholder="{{ $shippingInfo->email }}" name="shipping_email"></th>
+                        <td colspan="2" style="text-align: center;"><h1>Thông Tin Vận Chuyển Của Bạn</h1></td>
+                    </tr>
+                    <tr>
+                        <th scope="col" style="text-align: center;"><input type="text" placeholder="{{ $shippingInfo->email }}" name="shipping_email"></th>
                         <td>
                             @error('shipping_email')
                                 <span style="color:red;">{{$message}}</span>
@@ -120,7 +113,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col"><input type="text" placeholder="{{ $shippingInfo->name_customer }}" name="shipping_name"></th>
+                        <th scope="col" style="text-align: center;"><input type="text" placeholder="{{ $shippingInfo->name_customer }}" name="shipping_name"></th>
                         <td>
                             @error('shipping_name')
                                 <span style="color:red;">{{$message}}</span>
@@ -128,7 +121,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col"><input type="text" placeholder="Địa Chỉ Gửi..." name="shipping_address"></th>
+                        <th scope="col" style="text-align: center;"><input type="text" placeholder="Địa Chỉ Gửi..." name="shipping_address"></th>
                         <td>
                             @error('shipping_address')
                                 <span style="color:red;">{{$message}}</span>
@@ -136,7 +129,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col"><input type="text" placeholder="{{ $shippingInfo->phone }}" name="shipping_phone"></th>
+                        <th scope="col" style="text-align: center;"><input type="text" placeholder="{{ $shippingInfo->phone }}" name="shipping_phone"></th>
                         <td>
                             @error('shipping_phone')
                                 <span style="color:red;">{{$message}}</span>
@@ -144,7 +137,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="col"><input type="text" placeholder="Chú Thích..." name="shipping_note"></th>
+                        <th scope="col" style="text-align: center;"><input type="text" placeholder="Chú Thích..." name="shipping_note"></th>
                         <td>
                             @error('shipping_note')
                                 <span style="color:red;">{{$message}}</span>
@@ -152,20 +145,20 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><button class="btn btn-danger">Thanh Toán Tiền Mặt</button></td> 
-                    </tr>
-                    <tr>
-                        <td>
-                            <a class="btn btn-primary m-3" href="{{ route('us.processTransaction') }}">Thanh Toán PayPal</a>
-                        </td>
+                        <td colspan="2" class="payment-options">
+                            <button class="btn btn-danger" onclick="return confirm('Bạn Chắc Chắn Muốn Thanh Toán Bằng Tiền Mặt ?')">Thanh Toán Tiền Mặt</button>
+                            <span>hoặc</span>
+                            <a class="btn btn-primary m-3" href="{{ route('us.processTransaction') }}" onclick="return confirm('Bạn Chắc Chắn Muốn Thanh Toán Bằng PayPal ?')">Thanh Toán PayPal</a>
+                        </td> 
                     </tr>
                 </table>
-            </form> --}}
+            </form>
+        </div>
         @else
             <h2 style="color: red;text-align: center">Bạn Phải Có Tài Khoản Và Chọn Nơi Vận Chuyển Để Vận Chuyển Hàng !!!</h2>
             <h2 style="text-align: center;"><a href="{{ route('us.userLogin') }}">>>> Nếu Không Có Thì Đăng Ký Tại Đây <<<<</a></h2>
         @endif
-        <table border="2px" style="margin-left: auto;margin-right: auto;">
+        <table border="0px" style="margin-left: auto;margin-right: auto;">
             <tr>
                 <td>
                     <h2>Tổng Tiền Sản Phẩm: {{ number_format($total) }} VND</h2>
