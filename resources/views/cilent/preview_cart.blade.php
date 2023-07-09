@@ -96,67 +96,71 @@
                 @endforeach
             </tbody>
         </table>
-        @if (!empty(session()->get('user_login_id')&&(session()->get('fee'))))
-        <div class="shipping-container">
-            <form action="{{ route('us.addBill') }}" method="POST">
-                @csrf
-                <table border="0px" style="margin-left: auto;margin-right: auto;">
-                    <tr>
-                        <td colspan="2" style="text-align: center;"><h1>Thông Tin Vận Chuyển Của Bạn</h1></td>
-                    </tr>
-                    <tr>
-                        <th scope="col" style="text-align: center;"><input type="text" placeholder="{{ $shippingInfo->email }}" name="shipping_email"></th>
-                        <td>
-                            @error('shipping_email')
-                                <span style="color:red;">{{$message}}</span>
-                            @enderror
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="col" style="text-align: center;"><input type="text" placeholder="{{ $shippingInfo->name_customer }}" name="shipping_name"></th>
-                        <td>
-                            @error('shipping_name')
-                                <span style="color:red;">{{$message}}</span>
-                            @enderror
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="col" style="text-align: center;"><input type="text" placeholder="Địa Chỉ Gửi..." name="shipping_address"></th>
-                        <td>
-                            @error('shipping_address')
-                                <span style="color:red;">{{$message}}</span>
-                            @enderror
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="col" style="text-align: center;"><input type="text" placeholder="{{ $shippingInfo->phone }}" name="shipping_phone"></th>
-                        <td>
-                            @error('shipping_phone')
-                                <span style="color:red;">{{$message}}</span>
-                            @enderror
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="col" style="text-align: center;"><input type="text" placeholder="Chú Thích..." name="shipping_note"></th>
-                        <td>
-                            @error('shipping_note')
-                                <span style="color:red;">{{$message}}</span>
-                            @enderror
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="payment-options">
-                            <button class="btn btn-danger" onclick="return confirm('Bạn Chắc Chắn Muốn Thanh Toán Bằng Tiền Mặt ?')">Thanh Toán Tiền Mặt</button>
-                            <span>hoặc</span>
-                            <a class="btn btn-primary m-3" href="{{ route('us.processTransaction') }}" onclick="return confirm('Bạn Chắc Chắn Muốn Thanh Toán Bằng PayPal ?')">Thanh Toán PayPal</a>
-                        </td> 
-                    </tr>
-                </table>
-            </form>
-        </div>
+        @if (!empty(session()->get('user_login_id')))
+            @if (!empty(session()->get('fee')))
+                <div class="shipping-container">
+                    <form action="{{ route('us.addBill') }}" method="POST">
+                        @csrf
+                        <table border="0px" style="margin-left: auto;margin-right: auto;">
+                            <tr>
+                                <td colspan="2" style="text-align: center;"><h1>Thông Tin Vận Chuyển Của Bạn</h1></td>
+                            </tr>
+                            <tr>
+                                <th scope="col" style="text-align: center;"><input type="text" placeholder="{{ $shippingInfo->email }}" name="shipping_email"></th>
+                                <td>
+                                    @error('shipping_email')
+                                        <span style="color:red;">{{$message}}</span>
+                                    @enderror
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="col" style="text-align: center;"><input type="text" placeholder="{{ $shippingInfo->name_customer }}" name="shipping_name"></th>
+                                <td>
+                                    @error('shipping_name')
+                                        <span style="color:red;">{{$message}}</span>
+                                    @enderror
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="col" style="text-align: center;"><input type="text" placeholder="Địa Chỉ Gửi..." name="shipping_address"></th>
+                                <td>
+                                    @error('shipping_address')
+                                        <span style="color:red;">{{$message}}</span>
+                                    @enderror
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="col" style="text-align: center;"><input type="text" placeholder="{{ $shippingInfo->phone }}" name="shipping_phone"></th>
+                                <td>
+                                    @error('shipping_phone')
+                                        <span style="color:red;">{{$message}}</span>
+                                    @enderror
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="col" style="text-align: center;"><input type="text" placeholder="Chú Thích..." name="shipping_note"></th>
+                                <td>
+                                    @error('shipping_note')
+                                        <span style="color:red;">{{$message}}</span>
+                                    @enderror
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="payment-options">
+                                    <button class="btn btn-danger" onclick="return confirm('Bạn Chắc Chắn Muốn Thanh Toán Bằng Tiền Mặt ?')">Thanh Toán Tiền Mặt</button>
+                                    <span>hoặc</span>
+                                    <a class="btn btn-primary m-3" href="{{ route('us.processTransaction') }}" onclick="return confirm('Bạn Chắc Chắn Muốn Thanh Toán Bằng PayPal ?')">Thanh Toán PayPal</a>
+                                </td> 
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            @else
+                <h2 style="color: red;text-align: center">Bạn Phải Chọn Vùng Vận Chuyển Để Vận Giao Hàng !!! </h2>
+            @endif
         @else
-            <h2 style="color: red;text-align: center">Bạn Phải Có Tài Khoản Và Chọn Nơi Vận Chuyển Để Vận Chuyển Hàng !!!</h2>
-            <h2 style="text-align: center;"><a href="{{ route('us.userLogin') }}">>>> Nếu Không Có Thì Đăng Ký Tại Đây <<<<</a></h2>
+        <h2 style="color: red;text-align: center">Bạn Phải Có Tài Khoản !!!</h2>
+        <h2 style="text-align: center;"><a href="{{ route('us.userLogin') }}">>>> Nếu Không Có Thì Đăng Ký Tại Đây <<<<</a></h2>
         @endif
         <table border="0px" style="margin-left: auto;margin-right: auto;">
             <tr>

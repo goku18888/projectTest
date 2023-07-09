@@ -104,10 +104,14 @@
                 @endforeach
             </tbody>
         </table>
-        @if (!empty(session()->get('user_login_id')&&(session()->get('fee'))))
-            <div style="display: flex;justify-content: center;align-items: center;">
-                <button style="padding: 10px 20px;font-size: 18px;"><a href="{{ route('us.preview_Cart') }}">Thanh Toán</a></button>
-            </div>
+        @if (!empty(session()->get('user_login_id')))
+            @if (!empty(session()->get('fee')))
+                <div style="display: flex;justify-content: center;align-items: center;">
+                    <button style="padding: 10px 20px;font-size: 18px;"><a href="{{ route('us.preview_Cart') }}">Thanh Toán</a></button>
+                </div>
+            @else
+                <h2 style="color: red;text-align: center">Bạn Phải Chọn Vùng Vận Chuyển Để Vận Giao Hàng !!! </h2>
+            @endif
             {{-- <form action="{{ route('us.addBill') }}" method="POST">
                 @csrf
                 <table border="0px" style="margin-left: auto;margin-right: auto;">
@@ -162,7 +166,7 @@
                 </table>
             </form> --}}
         @else
-            <h2 style="color: red;text-align: center">Bạn Phải Có Tài Khoản Và Chọn Nơi Vận Chuyển Để Vận Chuyển Hàng !!!</h2>
+            <h2 style="color: red;text-align: center">Bạn Phải Có Tài Khoản !!!</h2>
             <h2 style="text-align: center;"><a href="{{ route('us.userLogin') }}">>>> Nếu Không Có Thì Đăng Ký Tại Đây <<<<</a></h2>
         @endif
         <table border="2px" style="margin-left: auto;margin-right: auto;">
