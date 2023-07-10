@@ -36,6 +36,11 @@ class UserProfileController extends Controller
     public function index(Request $request)
     {
         $search=$request->get('ab');
+        //check xem co tai khoan chua
+        if(!session()->has('name_customer')){
+            return redirect()->route('us.userLogin');
+        }
+        //xu li du lieu        
         $a=session()->get('user_login_id');
         $users = customers::where('id', $a)->first();
 
@@ -46,6 +51,11 @@ class UserProfileController extends Controller
     }
     public function showBill(Request $request,$id){
         $search=$request->get('ab');
+        //check xem co tai khoan chua
+        if(!session()->has('name_customer')){
+            return redirect()->route('us.userLogin');
+        }
+        //xu li du lieu
         $bill=DB::table('order')
         ->select('order.id','customer_id','total','order.created_at','order.status')
         ->orderBy('created_at','DESC')
@@ -64,6 +74,11 @@ class UserProfileController extends Controller
     }
     public function billDetails(Request $request,$id){
         $search=$request->get('ab');
+        //check xem co tai khoan chua
+        if(!session()->has('name_customer')){
+            return redirect()->route('us.userLogin');
+        }
+        //xu li du lieu        
         $detail=DB::table('order')
         ->select('order.id','order.customer_id','total','order.created_at','order.status','name_customer','shipping_address','customers.phone','address')
         ->where('order.id',$id)
@@ -85,6 +100,11 @@ class UserProfileController extends Controller
         ]);
     }
     public function delete_order(Request $request){
+        //check xem co tai khoan chua
+        if(!session()->has('name_customer')){
+            return redirect()->route('us.userLogin');
+        }
+        //xu li du lieu   
         $data=$request->all();
         $order=order::find($data['order_id']);
         $order->destroy=$data['lydo'];
@@ -132,6 +152,11 @@ class UserProfileController extends Controller
     public function edit(Request $request,$id)
     {
         $search=$request->get('ab');
+        //check xem co tai khoan chua
+        if(!session()->has('name_customer')){
+            return redirect()->route('us.userLogin');
+        }
+        //xu li du lieu
         $users = customers::where('id',$id)->first();
         return view('cilent.profile.edit', [
             'search' => $search,
@@ -194,7 +219,6 @@ class UserProfileController extends Controller
      */
     public function destroy($id)
     {
-        dd('dada');
         customers::where('id',$id)->delete();
         return redirect()->route('us.userLogin');
     }

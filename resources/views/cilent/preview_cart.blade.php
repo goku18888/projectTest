@@ -152,6 +152,11 @@
                                     <a class="btn btn-primary m-3" href="{{ route('us.processTransaction') }}" onclick="return confirm('Bạn Chắc Chắn Muốn Thanh Toán Bằng PayPal ?')">Thanh Toán PayPal</a>
                                 </td> 
                             </tr>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <a class="btn btn-primary m-3" href="{{ route('us.index') }}" onclick="return confirm('Bạn Chắc Chắn Muốn Quay Lại Giỏ Hàng ?')">Quay về giỏ hàng</a>
+                                </td>
+                            </tr>
                         </table>
                     </form>
                 </div>
@@ -172,7 +177,7 @@
                 @if (session('fee'))
                     <td>
                         <h2>
-                            <a href="{{ url('/user/del-fee') }}"><i class="fa fa-times"></i></a>
+                            {{-- <a href="{{ url('/user/del-fee') }}"><i class="fa fa-times"></i></a> --}}
                             Giá Tiền Vận Chuyển:{{ number_format(session('fee'), 0, ',', '.') }} VND
                         </h2>
                     </td>

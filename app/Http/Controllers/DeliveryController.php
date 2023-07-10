@@ -62,6 +62,7 @@ class DeliveryController extends Controller
         </div>';
         echo $output;
     }
+    
     public function update_delivery(Request $request){
         $feeship_id = $request->input('feeship_id');
         $fee_value = $request->input('fee_value');
@@ -74,6 +75,7 @@ class DeliveryController extends Controller
         $feeship->save();
         return response()->json(['message' => 'Cập nhật thành công']);
     }
+
     public function update_code_delivery(Request $request)
     {
         $order_id = $request->input('order_id');
