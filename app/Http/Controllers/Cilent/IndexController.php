@@ -498,21 +498,35 @@ class IndexController extends Controller
         echo $output;
     }
     public function send_comment(Request $request){
+        //check xem co tai khoan chua
+        $customer_name_require=session()->get('name_customer');
+        if(!$customer_name_require){
+            return redirect()->route('us.userLogin');
+        }
+        //xu li du lieu
         $product_id=$request->product_id;
-        $customer_name=$request->customer_name;
+        // $customer_name=$request->customer_name;
         $comment_content=$request->comment_content;
         $comment=new Comment();
         $comment->comment=$comment_content;
-        $comment->customer_name=$customer_name;
+        $comment->customer_name=$customer_name_require;
         $comment->product_id=$product_id;
         $comment->comment_status=1;
         $comment->comment_parent_comment=0;
         $comment->save();
+        echo 'done';
     }
     public function insert_rating(Request $request){
+        $customer_id=session()->get('user_login_id');
+        //check xem co tai khoan chua
+        if(!session()->has('user_login_id')){
+            return redirect()->route('us.userLogin');
+        }
+        //xu li du lieu           
         $data=$request->all();
         $rating=new ratings();
         $rating->product_id=$data['product_id'];
+        $rating->customer_id=$customer_id;
         $rating->rating=$data['index'];
         $rating->save();
         echo 'done';

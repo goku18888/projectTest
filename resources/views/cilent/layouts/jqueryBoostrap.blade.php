@@ -54,7 +54,7 @@
                 if (data=='done') {
                     alert('Bạn đã vote' +index+ 'trên tổng 5 sao');
                 } else {
-                    alert('Vote bị lỗi');
+                    alert('Bạn chưa đăng nhập.');
                 }
             }
         });
@@ -88,11 +88,18 @@
                 type:"POST",
                 data:{product_id:product_id,customer_name:customer_name,comment_content:comment_content,_token:_token},
                 success:function(data){
-                    $('#notify_comment').html('<p class="text text-success">Your Comment Have Posted,please wait us to accept your comment :3 </p>');
-                    load_comment();
-                    $('#notify_comment').fadeOut(9000);
-                    $('.customer_name').val('');
-                    $('.comment_content').val('');
+                    if (data =='done') {
+                        $('#notify_comment').html('<p class="text text-success">Your Comment Have Posted,please wait us to accept your comment :3 </p>');
+                        load_comment();
+                        $('#notify_comment').fadeOut(9000);
+                        $('.customer_name').val('');
+                        $('.comment_content').val('');
+                    } else {
+                        alert('Bạn chưa đăng nhập.');
+                    }
+                },
+                error:function(err){
+                    console.log(err);
                 }
             });
         });

@@ -146,7 +146,7 @@
                                                 <form>
                                                     @csrf
                                                         <input type="hidden" name="product_id" class="product_id" value="{{ $user->id }}">
-                                                        <input type="text" name="customer_name" class="customer_name" placeholder="your name..." style="width: 100%"/><br>
+                                                        <input type="text" name="customer_name" class="customer_name" placeholder="your name..." value="{{ session()->get('name_customer') }}" style="width: 100%"/><br>
                                                         <textarea name="comment_content" class="comment_content" style="width: 100%" placeholder="type..."></textarea>
                                                         <input type="button" class="btn btn-sm btn-outline-danger send-comment" value="Add Comment"/>
                                                     <div id="notify_comment"></div>
