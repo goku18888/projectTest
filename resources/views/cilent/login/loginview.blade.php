@@ -54,7 +54,7 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
 						</div>
-						<input type="text" class="form-control" placeholder="username" name="name_customer">
+						<input type="text" class="form-control" placeholder="Email" name="email">
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">

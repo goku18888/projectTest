@@ -7,6 +7,17 @@
             href="https://datatables.net">official DataTables documentation</a>.</p> -->
 
     <!-- DataTales Example -->
+    @if (session()->has("supplier_fail"))
+    <div class="alert alert-danger">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        {{ session()->get('supplier_fail') }}
+    </div>
+    @elseif (session()->has("supplier_success"))
+        <div class="alert alert-success">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            {{ session()->get('supplier_success') }}
+        </div>
+    @endif
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">                             
@@ -43,7 +54,7 @@
                               <td><a href="{{ route('ad.sup') }}"><i class="fas fa-plus"></i></td>
                               <td><a href="{{ route('ad.supedit',['id'=>$vi->id]) }}">Update</a></td>
                               <td>
-                                <form action="{{ route('ad.destroysup',['id'=>$vi->id]) }}" method="POST">
+                                <form action="{{ route('ad.destroysup',['id'=>$vi->id]) }}" onclick="return confirm('Bạn có chắc muốn xóa không ?')" method="POST">
                                   @csrf
                                   @method('DELETE')
                                   <button>Delete</button>

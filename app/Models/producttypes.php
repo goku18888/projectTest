@@ -8,11 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class producttypes extends Model
 {
     use HasFactory;
-    public $timestamps = false;
+    public $timestamps = true;
     protected $table='producttypes';
 
     protected $fillable=[
         'name_producttype',
         'supplier_id',
     ];
+
+    public function products(){
+        return $this->hasMany(products::class,'producttype_id','id');
+    }
 }

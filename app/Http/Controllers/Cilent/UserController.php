@@ -42,8 +42,8 @@ class UserController extends Controller
     public function ProcessLogin(Request $request){
         try{
             $user=customers::query()
-            ->where('name_customer',$request->get('name_customer'))
-            // ->where('email',$request->get('email'))
+            // ->where('name_customer',$request->get('name_customer'))
+            ->where('email',$request->get('email'))
             ->firstOrFail();
 
             if(!Hash::check($request->get('pass_word'),$user->pass_word)){

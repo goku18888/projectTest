@@ -120,7 +120,7 @@ class SupplierController extends Controller
     public function store(StoreRequest $request)
     {
         $suppliers = suppliers::create(array_merge($request->validated()));
-        return redirect('admin/products');
+        return redirect('admin/suppliers');
     }
 
     /**
@@ -200,7 +200,16 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        suppliers::where('id', $id)->delete();
-        return redirect('admin/suppliers');
+        $check=producttypes::where('supplier_id',$id)
+        ->select('supplier_id')
+        ->get();
+        if ($check->isEmpty()) {
+            suppliers::where('id', $id)->delete();
+            return redirect('admin/suppliers')
+            ->with('supplier_success','Đã xóa Thành công.');
+        }else {
+            return redirect('admin/suppliers')
+            ->with('supplier_fail','Vẫn có điện thoại có hãng này,không thể xóa.');
+        }
     }
 }

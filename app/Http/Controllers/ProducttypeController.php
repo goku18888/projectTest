@@ -6,9 +6,11 @@ use App\Http\Requests\Producttype\StoreProducttype;
 use App\Http\Requests\Producttype\UpdateRequest;
 use App\Models\bills;
 use App\Models\order;
+use App\Models\products;
 use App\Models\producttypes;
 use App\Models\suppliers;
 use App\Models\threads;
+use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -121,7 +123,10 @@ class ProducttypeController extends Controller
      */
     public function store(StoreProducttype $request)
     {
-        $producttypes = producttypes::create(array_merge($request->validated()));
+        $producttypes = producttypes::create([
+            'supplier_id' => $request->supplier_id,
+            'name_producttype' => $request->name_producttype,
+            ]);
         return redirect('admin/producttype');
     }
 
@@ -203,7 +208,16 @@ class ProducttypeController extends Controller
      */
     public function destroy($id)
     {
-        producttypes::where('id', $id)->delete();
-        return redirect('admin/producttype');
+        $check=products::where('producttype_id',$id)
+        ->select('producttype_id')
+        ->get();
+        if ($check->isEmpty()) {
+            producttypes::where('id', $id)->delete();
+            return redirect('admin/producttype')
+            ->with('producttype_success','Đã xóa Thành công.');
+        }else {
+            return redirect('admin/producttype')
+            ->with('producttype','Vẫn có điện thoại có hãng này,không thể xóa.');
+        }
     }
 }
