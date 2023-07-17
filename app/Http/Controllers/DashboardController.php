@@ -7,6 +7,7 @@ use App\Models\customers;
 use App\Models\order;
 use App\Models\products;
 use App\Models\producttypes;
+use App\Models\ratings;
 use App\Models\statisticals;
 use App\Models\suppliers;
 use App\Models\threads;
@@ -89,7 +90,10 @@ class DashboardController extends Controller
         $product=products::all()->count();
         $customer=customers::all()->count();
         $bill=bills::all()->count();
-        $product_views=products::orderBy('product_views','DESC')->take(8)->get(); 
+        $product_views=products::orderBy('product_views','DESC')->take(8)->get();
+
+        //sao
+        $rating=ratings::orderBy('rating','DESC')->take(4)->get();
 
         return view('admin.dashboard',[
             'messages' => $messages,
@@ -108,6 +112,8 @@ class DashboardController extends Controller
             'customer' => $customer,
             'bill' => $bill,
             'product_views' => $product_views,
+
+            'rating' => $rating,
         ]);
     }
     public function filter_by_date(Request $request){

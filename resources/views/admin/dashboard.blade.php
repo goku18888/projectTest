@@ -74,14 +74,37 @@
                             <div id="donut" class="morris-donut-inverse"></div>
                         </div>
                         <div class="col-md-4 col-xs-12">
-                            <h3>San Pham Xem Nhieu</h3>
+                            <h3>Sản phẩm xem nhiều</h3>
                             <ol>
                                 @foreach ($product_views as $key => $pro)
                                     <li>
-                                        <a target="_blank" href="{{ url('user/detail/'.$pro->id.'') }}">{{$pro->name_product}} | <span>{{ $pro->product_views }}</span></a>
+                                        <a target="_blank" href="{{ url('user/detail/'.$pro->id.'') }}">{{$pro->name_product}} : <span>{{ $pro->product_views }}</span></a>
                                     </li>
                                 @endforeach
                             </ol>
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <h3>4 sản phẩm được đánh giá nhiều nhất</h3>
+                            @foreach ($rating as $key => $ratyng)
+                                <ul class="list-inline rating" title="Average Rating">
+                                    <a target="_blank" href="{{ url('user/detail/'.$pro->id.'') }}">{{$pro->name_product}}: </span></a>
+                                    @for ($count = 1; $count <= 5; $count++)
+                                        @php
+                                            $ratingValue = $ratyng->rating; // Truy xuất giá trị cột 'rating'
+                                            $color = ($count <= $ratingValue) ? 'color:#ffcc00;' : 'color:#ccc;';
+                                        @endphp
+                                        <li title="star rating"
+                                            {{-- id="{{ $user->id }}-{{ $count }}" --}}
+                                            data-index="{{ $count }}"
+                                            {{-- data-product_id="{{ $user->id }}" --}}
+                                            data-rating="{{ $ratyng }}"
+                                            class="rating"
+                                            style="cursor: pointer;{{ $color }} font-size: 30px; display: inline;">
+                                            &#9733;
+                                        </li>
+                                    @endfor
+                                </ul>
+                            @endforeach                                           
                         </div>
                     </div>
                 </div>
